@@ -29,6 +29,51 @@ function shadcn_wp_scripts() {
 }
 add_action('wp_enqueue_scripts', 'shadcn_wp_scripts');
 
+/**
+ * Utility function to get button classes with consistent styling
+ * 
+ * @param string $variant Button variant (default, outline, destructive, secondary, ghost, link)
+ * @param string $size Button size (default, sm, lg, icon)
+ * @param string $additional_classes Any additional classes to add
+ * @return string The complete class string
+ */
+function shadcn_button_classes($variant = 'default', $size = 'default', $additional_classes = '') {
+    // Base classes for all buttons
+    $base_classes = 'inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50';
+    
+    // Variant classes
+    $variant_classes = [
+        'default' => 'bg-black text-white hover:bg-black/90',
+        'destructive' => 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
+        'outline' => 'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
+        'secondary' => 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+        'ghost' => 'hover:bg-accent hover:text-accent-foreground',
+        'link' => 'text-primary underline-offset-4 hover:underline',
+    ];
+    
+    // Size classes
+    $size_classes = [
+        'default' => 'h-10 px-4 py-2',
+        'sm' => 'h-9 rounded-md px-3',
+        'lg' => 'h-11 rounded-md px-8',
+        'icon' => 'h-10 w-10',
+    ];
+    
+    // Get the appropriate classes or use default if not found
+    $variant_class = isset($variant_classes[$variant]) ? $variant_classes[$variant] : $variant_classes['default'];
+    $size_class = isset($size_classes[$size]) ? $size_classes[$size] : $size_classes['default'];
+    
+    // Combine all classes
+    $classes = $base_classes . ' ' . $variant_class . ' ' . $size_class;
+    
+    // Add any additional classes
+    if (!empty($additional_classes)) {
+        $classes .= ' ' . $additional_classes;
+    }
+    
+    return $classes;
+}
+
 // Theme support
 function shadcn_wp_setup() {
   // Add default posts and comments RSS feed links to head
