@@ -1,0 +1,16 @@
+/*
+Theme Name: Shadcn WordPress
+Theme URI: https://example.com/shadcn-wordpress
+Author: Your Name
+Author URI: https://example.com
+Description: A WordPress theme inspired by shadcn/ui design system
+Version: 1.0.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: shadcn-wp
+Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready
+*/
+
+/* This file is only used for WordPress theme identification.
+   The actual styles are in the Tailwind CSS output file. */
+
