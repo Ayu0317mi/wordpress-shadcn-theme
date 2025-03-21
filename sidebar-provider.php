@@ -10,8 +10,8 @@
   <!-- Sidebar -->
   <div id="sidebar" class="group pointer-events-auto hidden md:block text-sidebar-foreground" data-state="expanded" data-collapsible="" data-variant="sidebar" data-side="left">
     <!-- Sidebar fixed container -->
-    <div class="fixed inset-y-0 left-0 z-10 h-svh w-[16rem] md:flex flex-col transition-transform duration-200 ease-in-out transform -translate-x-full shadow-xl">
-      <div data-sidebar="sidebar" class="flex h-full w-full flex-col bg-[hsl(var(--sidebar-background))] text-[hsl(var(--sidebar-foreground))] border-r border-[hsl(var(--sidebar-border))]">
+    <div class="fixed inset-y-0 left-0 z-10 h-svh w-[16rem] md:flex flex-col transition-transform duration-200 ease-in-out transform -translate-x-full shadow-xl border-r border-[hsl(var(--sidebar-border))]" style="box-sizing: border-box;">
+      <div data-sidebar="sidebar" class="flex h-full w-full flex-col bg-white dark:bg-gray-950 text-[hsl(var(--sidebar-foreground))]">
         
         <!-- Sidebar Header -->
         <div data-sidebar="header" class="flex flex-col gap-2 p-4">
@@ -164,9 +164,9 @@
     <!-- Sidebar Trigger Button - Attached to sidebar -->
     <button 
       id="sidebar-trigger" 
-      class="fixed z-50 p-2 rounded-l-none rounded-r-md bg-[hsl(var(--sidebar-background))] text-[hsl(var(--sidebar-foreground))] hover:bg-[hsl(var(--sidebar-accent))] hover:text-[hsl(var(--sidebar-accent-foreground))] shadow-md border-t border-r border-b border-[hsl(var(--sidebar-border))] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[hsl(var(--sidebar-ring))]"
+      class="fixed z-50 p-2 rounded-l-none rounded-r-md bg-white dark:bg-gray-950 text-[hsl(var(--sidebar-foreground))] hover:bg-gray-100 dark:hover:bg-gray-900 hover:text-[hsl(var(--sidebar-accent-foreground))] shadow-md border-t border-r border-b border-[hsl(var(--sidebar-border))] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[hsl(var(--sidebar-ring))]"
       aria-label="Toggle sidebar"
-      style="top: 5.5rem; left: 0; transition: left 0.2s ease-in-out;"
+      style="top: 1rem; left: 0; transition: left 0.2s ease-in-out, transform 0.2s ease-in-out;"
     >
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
         <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
@@ -177,7 +177,7 @@
   
   <!-- Mobile Sidebar -->
   <div id="mobile-sidebar" class="md:hidden pointer-events-auto">
-    <div data-sidebar="sidebar" data-mobile="true" class="fixed inset-y-0 left-0 z-50 w-[18rem] bg-[hsl(var(--sidebar-background))] text-[hsl(var(--sidebar-foreground))] p-0 transform -translate-x-full transition-transform duration-300 ease-in-out shadow-xl">
+    <div data-sidebar="sidebar" data-mobile="true" class="fixed inset-y-0 left-0 z-50 w-[18rem] bg-white dark:bg-gray-950 text-[hsl(var(--sidebar-foreground))] p-0 transform -translate-x-full transition-transform duration-300 ease-in-out shadow-xl border-r border-[hsl(var(--sidebar-border))]">
       <div class="flex h-full w-full flex-col">
         <!-- Mobile Sidebar Header -->
         <div data-sidebar="header" class="flex flex-col gap-2 p-4">
@@ -291,6 +291,6 @@
       </div>
     </div>
     <!-- Mobile Sidebar Overlay -->
-    <div id="mobile-sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden opacity-0 transition-opacity duration-300 ease-in-out pointer-events-auto"></div>
+    <div id="mobile-sidebar-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden opacity-0 transition-opacity duration-300 ease-in-out pointer-events-auto"></div>
   </div>
 </div>

@@ -31,11 +31,18 @@
 
 <body <?php body_class('bg-background text-foreground antialiased'); ?>>
 <?php wp_body_open(); ?>
-<div id="page" class="min-h-screen flex flex-col">
-  <header id="masthead" class="sticky top-0 z-40 w-full border-b bg-white dark:bg-gray-950 shadow-sm">
+<div id="page" class="min-h-screen flex flex-col overflow-x-hidden relative" style="box-sizing: border-box;">
+  <header id="masthead" class="sticky top-0 z-30 w-full border-b bg-white dark:bg-gray-950 shadow-sm">
     <div class="container flex h-16 items-center py-4">
       <div class="flex-1 flex items-center justify-start">
-        <!-- This div left empty for layout balance -->
+        <!-- Mobile menu toggle button -->
+        <button id="mobile-menu-toggle" class="md:hidden p-2 rounded-md hover:bg-accent">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+            <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+            <line x1="9" x2="9" y1="3" y2="21"></line>
+          </svg>
+          <span class="sr-only">Toggle Menu</span>
+        </button>
       </div>
 
       <div class="flex-1 flex justify-center">
@@ -67,4 +74,4 @@
   <!-- Include the Sidebar -->
   <?php include(get_template_directory() . '/sidebar-provider.php'); ?>
 
-  <div id="content" class="flex-grow">
+  <div id="content" class="flex-grow relative z-20">

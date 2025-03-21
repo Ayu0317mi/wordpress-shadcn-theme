@@ -29,16 +29,74 @@ document.addEventListener('DOMContentLoaded', () => {
       sidebar.dataset.collapsible = expanded ? "" : "offcanvas";
       
       // Transform the sidebar instead of adjusting content margin
-      sidebarContent.style.transform = expanded ? "translateX(0)" : "translateX(-100%)";
+      // Clear floating-point rounding issues by using exact integers
+      sidebarContent.style.transform = expanded ? "translateX(0px)" : "translateX(-100%)";
       
       // Set cookie
       document.cookie = `${SIDEBAR_COOKIE_NAME}=${expanded}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
       
-      // Move trigger button with sidebar
+      const isMobile = window.innerWidth < 768;
+      
+      // Handle the sidebar trigger button
       if (sidebarTrigger) {
         // Use transition for smooth movement
-        sidebarTrigger.style.transition = "left 0.2s ease-in-out";
-        sidebarTrigger.style.left = expanded ? "16rem" : "0";
+        sidebarTrigger.style.transition = "left 0.2s ease-in-out, transform 0.2s ease-in-out, opacity 0.2s ease-in-out";
+        
+        if (expanded && !isMobile) {
+          // Hide the trigger button when sidebar is expanded
+          sidebarTrigger.style.opacity = "0";
+          sidebarTrigger.style.pointerEvents = "none";
+        } else {
+          // Show the trigger button when sidebar is collapsed
+          sidebarTrigger.style.opacity = "1";
+          sidebarTrigger.style.pointerEvents = "auto";
+          sidebarTrigger.style.left = "0";
+          sidebarTrigger.style.transform = "translateX(0)";
+        }
+      }
+      
+      // Adjust the entire page content, header, and footer
+      const header = document.getElementById("masthead");
+      const pageContent = document.getElementById("content");
+      const footer = document.getElementById("colophon");
+      const pageWrapper = document.getElementById("page");
+      const transitionStyle = "transform 0.2s ease-in-out, width 0.2s ease-in-out, margin-left 0.2s ease-in-out";
+      
+      if (pageWrapper) {
+        // Set margin approach instead of transform to avoid gaps
+        pageWrapper.style.transition = transitionStyle;
+        pageWrapper.style.boxSizing = "border-box";
+        
+        // Only move the page on desktop, hover on mobile
+        if (!isMobile) {
+          // Ensuring exact width matches to avoid gaps
+          const sidebarWidth = "16rem";
+          pageWrapper.style.marginLeft = expanded ? sidebarWidth : "0";
+          pageWrapper.style.width = expanded ? `calc(100% - ${sidebarWidth})` : "100%";
+        } else {
+          // Reset positioning on mobile - sidebar will float over content
+          pageWrapper.style.marginLeft = "0";
+          pageWrapper.style.width = "100%";
+        }
+      }
+      
+      // Reset any transforms on individual elements to avoid duplication
+      if (header) {
+        header.style.transition = transitionStyle;
+        header.style.transform = "translateX(0)";  // Reset transform
+        header.style.width = "100%";  // Full width of its container
+      }
+      
+      if (pageContent) {
+        pageContent.style.transition = transitionStyle;
+        pageContent.style.transform = "translateX(0)";  // Reset transform
+        pageContent.style.width = "100%";  // Full width of its container
+      }
+      
+      if (footer) {
+        footer.style.transition = transitionStyle;
+        footer.style.transform = "translateX(0)";  // Reset transform
+        footer.style.width = "100%";  // Full width of its container
       }
     }
   }
@@ -56,6 +114,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // First show the overlay but with opacity 0
         mobileSidebarOverlay.classList.remove("hidden");
         
+        // Prevent body scrolling when sidebar is open
+        document.body.style.overflow = "hidden";
+        
         // Force a reflow to make sure the hidden removal is processed
         void mobileSidebarOverlay.offsetWidth;
         
@@ -66,6 +127,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // First fade out and slide out
         mobileSidebarOverlay.style.opacity = "0";
         mobileSidebarContent.style.transform = "translateX(-100%)";
+        
+        // Restore body scrolling
+        document.body.style.overflow = "";
         
         // Hide the overlay after transition completes
         setTimeout(() => {
@@ -80,11 +144,51 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Small delay to ensure all DOM elements are properly loaded before applying transitions
   setTimeout(() => {
+    // Set initial state for the trigger button
+    if (sidebarTrigger) {
+      // Initialize the trigger button state
+      if (initialSidebarState && window.innerWidth >= 768) {
+        sidebarTrigger.style.opacity = "0";
+        sidebarTrigger.style.pointerEvents = "none";
+      } else {
+        sidebarTrigger.style.opacity = "1";
+        sidebarTrigger.style.pointerEvents = "auto";
+      }
+    }
+    
     setSidebarState(initialSidebarState);
     
     // Make transitions visible only after initial state is set
     if (sidebarContent) {
       sidebarContent.style.transition = "transform 0.2s ease-in-out";
+    }
+    
+    // Also set transitions for page elements after initial state is set
+    const header = document.getElementById("masthead");
+    const pageContent = document.getElementById("content");
+    const footer = document.getElementById("colophon");
+    const pageWrapper = document.getElementById("page");
+    const transitionStyle = "transform 0.2s ease-in-out, width 0.2s ease-in-out, margin-left 0.2s ease-in-out";
+    
+    if (sidebarTrigger) {
+      sidebarTrigger.style.transition = "left 0.2s ease-in-out, transform 0.2s ease-in-out, opacity 0.2s ease-in-out";
+    }
+    
+    if (pageWrapper) {
+      pageWrapper.style.transition = transitionStyle;
+      pageWrapper.style.boxSizing = "border-box";
+    }
+    
+    if (header) {
+      header.style.transition = transitionStyle;
+    }
+    
+    if (pageContent) {
+      pageContent.style.transition = transitionStyle;
+    }
+    
+    if (footer) {
+      footer.style.transition = transitionStyle;
     }
   }, 50);
   
@@ -116,11 +220,45 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
   
+  // Mobile menu toggle button in header
+  const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
+  if (mobileMenuToggle) {
+    mobileMenuToggle.addEventListener("click", function() {
+      toggleMobileSidebar(true);
+    });
+  }
+  
+  // Function to clean up layout after transitions
+  function cleanupLayout() {
+    const pageWrapper = document.getElementById("page");
+    if (pageWrapper) {
+      pageWrapper.style.boxSizing = "border-box";
+    }
+  }
+  
   // Listen for window resize to switch between mobile and desktop
   window.addEventListener("resize", function() {
     const isMobile = window.innerWidth < 768;
+    const isExpanded = sidebar?.dataset.state === "expanded";
+    
+    // Close mobile sidebar when switching to desktop
     if (!isMobile && mobileSidebarContent) {
       toggleMobileSidebar(false);
+    }
+    
+    // Re-apply sidebar state to adjust layout for new screen size
+    if (isExpanded) {
+      setSidebarState(isExpanded);
+    }
+    
+    // Clean up after resize
+    cleanupLayout();
+  });
+  
+  // Listen for transition end to fix any remaining gap issues
+  document.addEventListener("transitionend", function(event) {
+    if (event.target.id === "page" || event.target.closest("#sidebar-wrapper")) {
+      cleanupLayout();
     }
   });
   

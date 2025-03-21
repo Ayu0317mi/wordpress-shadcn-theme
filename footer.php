@@ -5,7 +5,7 @@
 ?>
   </div><!-- #content -->
 
-  <footer id="colophon" class="border-t bg-background mt-auto">
+  <footer id="colophon" class="border-t bg-background mt-auto relative z-20">
     <div class="container py-8 md:py-12">
       <div class="grid gap-8 sm:grid-cols-2 md:grid-cols-4">
         <div>
