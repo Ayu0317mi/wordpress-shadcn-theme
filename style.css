@@ -14,3 +14,50 @@ Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-com
 /* This file is only used for WordPress theme identification.
    The actual styles are in the Tailwind CSS output file. */
 
+/* Sidebar CSS Variables */
+:root {
+  --sidebar-width: 16rem;
+  --sidebar-width-icon: 3rem;
+  --sidebar-width-mobile: 18rem;
+}
+
+/* Additional styles for the sidebar */
+.bg-sidebar {
+  background-color: white;
+  border-right: 1px solid hsl(var(--border));
+}
+
+.dark .bg-sidebar {
+  background-color: rgb(3, 7, 18); /* gray-950 in Tailwind */
+  border-right: 1px solid hsl(var(--border));
+}
+
+.text-sidebar-foreground {
+  color: hsl(var(--foreground));
+}
+
+.bg-sidebar-accent {
+  background-color: hsl(var(--accent));
+}
+
+.text-sidebar-accent-foreground {
+  color: hsl(var(--accent-foreground));
+}
+
+.ring-sidebar-ring {
+  --tw-ring-color: hsl(var(--ring));
+}
+
+.border-sidebar-border {
+  border-color: hsl(var(--border));
+}
+
+/* Sidebar trigger button transition */
+#sidebar-trigger {
+  transition: left 0.2s ease-linear;
+}
+
+/* Add transition to mobile sidebar */
+#mobile-sidebar [data-sidebar='sidebar'] {
+  transition: transform 0.3s ease;
+}
