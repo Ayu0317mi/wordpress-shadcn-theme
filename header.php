@@ -4,11 +4,28 @@
  */
 ?>
 <!doctype html>
-<html <?php language_attributes(); ?>>
+<html <?php language_attributes(); ?> class="<?php echo (isset($_COOKIE['theme']) && $_COOKIE['theme'] === 'dark') ? 'dark' : ''; ?>">
 <head>
   <meta charset="<?php bloginfo('charset'); ?>">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="profile" href="https://gmpg.org/xfn/11">
+  
+  <script>
+    // Initial theme setup based on localStorage or system preference
+    (function() {
+      const userTheme = localStorage.getItem('theme');
+      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      
+      if (userTheme === 'dark' || (userTheme === 'system' && systemPrefersDark) || (!userTheme && systemPrefersDark)) {
+        document.documentElement.classList.add('dark');
+        document.cookie = 'theme=dark; path=/; max-age=31536000';
+      } else {
+        document.documentElement.classList.remove('dark');
+        document.cookie = 'theme=light; path=/; max-age=31536000';
+      }
+    })();
+  </script>
+  
   <?php wp_head(); ?>
 </head>
 
