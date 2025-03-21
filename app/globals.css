@@ -92,3 +92,93 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  /* Fix for prose text colors in dark mode */
+  .dark .prose {
+    color: hsl(var(--foreground));
+  }
+  
+  .dark .prose p {
+    color: hsl(var(--foreground));
+  }
+
+  .dark .prose li {
+    color: hsl(var(--foreground));
+  }
+  
+  .dark .prose strong {
+    color: hsl(var(--foreground));
+  }
+  
+  .dark .prose a {
+    color: hsl(var(--primary));
+  }
+  
+  .dark .prose h1,
+  .dark .prose h2,
+  .dark .prose h3,
+  .dark .prose h4,
+  .dark .prose h5,
+  .dark .prose h6 {
+    color: hsl(var(--foreground));
+  }
+  
+  .dark .prose blockquote {
+    color: hsl(var(--foreground));
+  }
+  
+  .dark .prose blockquote p {
+    color: hsl(var(--foreground));
+  }
+  
+  .dark .prose figure figcaption {
+    color: hsl(var(--muted-foreground));
+  }
+  
+  .dark .prose code {
+    color: hsl(var(--foreground));
+    background-color: hsl(var(--muted));
+  }
+  
+  .dark .prose pre {
+    background-color: hsl(var(--muted));
+  }
+  
+  .dark .prose pre code {
+    color: hsl(var(--foreground));
+    background-color: transparent;
+  }
+  
+  .dark .prose thead {
+    color: hsl(var(--foreground));
+    border-bottom-color: hsl(var(--border));
+  }
+  
+  .dark .prose thead th {
+    color: hsl(var(--foreground));
+  }
+  
+  .dark .prose tbody tr {
+    border-bottom-color: hsl(var(--border));
+  }
+  
+  .dark .prose tbody td {
+    color: hsl(var(--foreground));
+  }
+  
+  /* Fix for entry-content text */
+  .dark .entry-content {
+    color: hsl(var(--foreground));
+  }
+  
+  /* Additional styling for text-muted-foreground elements in dark mode */
+  .dark .text-muted-foreground {
+    color: hsl(var(--muted-foreground));
+  }
+  
+  /* Force all text to use foreground color in dark mode */
+  .dark p, .dark span, .dark div, .dark li {
+    color: hsl(var(--foreground));
+  }
+}

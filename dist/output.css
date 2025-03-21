@@ -649,8 +649,8 @@ body {
 }
 
 .prose {
-  color: var(--tw-prose-body);
-  max-width: 65ch;
+  color: hsl(var(--foreground));
+  max-width: none;
 }
 
 .prose :where(p):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
@@ -667,13 +667,17 @@ body {
 }
 
 .prose :where(a):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
-  color: var(--tw-prose-links);
+  color: hsl(var(--primary));
   text-decoration: underline;
   font-weight: 500;
 }
 
+.prose :where(a):not(:where([class~="not-prose"],[class~="not-prose"] *)):hover {
+  color: hsl(var(--primary));
+}
+
 .prose :where(strong):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
-  color: var(--tw-prose-bold);
+  color: hsl(var(--foreground));
   font-weight: 600;
 }
 
@@ -764,7 +768,7 @@ body {
 .prose :where(blockquote):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
   font-weight: 500;
   font-style: italic;
-  color: var(--tw-prose-quotes);
+  color: hsl(var(--foreground));
   border-inline-start-width: 0.25rem;
   border-inline-start-color: var(--tw-prose-quote-borders);
   quotes: "\201C""\201D""\2018""\2019";
@@ -782,7 +786,7 @@ body {
 }
 
 .prose :where(h1):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
-  color: var(--tw-prose-headings);
+  color: hsl(var(--foreground));
   font-weight: 800;
   font-size: 2.25em;
   margin-top: 0;
@@ -796,7 +800,7 @@ body {
 }
 
 .prose :where(h2):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
-  color: var(--tw-prose-headings);
+  color: hsl(var(--foreground));
   font-weight: 700;
   font-size: 1.5em;
   margin-top: 2em;
@@ -810,7 +814,7 @@ body {
 }
 
 .prose :where(h3):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
-  color: var(--tw-prose-headings);
+  color: hsl(var(--foreground));
   font-weight: 600;
   font-size: 1.25em;
   margin-top: 1.6em;
@@ -824,7 +828,7 @@ body {
 }
 
 .prose :where(h4):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
-  color: var(--tw-prose-headings);
+  color: hsl(var(--foreground));
   font-weight: 600;
   margin-top: 1.5em;
   margin-bottom: 0.5em;
@@ -866,7 +870,7 @@ body {
 }
 
 .prose :where(code):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
-  color: var(--tw-prose-code);
+  color: hsl(var(--foreground));
   font-weight: 600;
   font-size: 0.875em;
 }
@@ -1000,7 +1004,7 @@ body {
 }
 
 .prose :where(figcaption):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
-  color: var(--tw-prose-captions);
+  color: hsl(var(--muted-foreground));
   font-size: 0.875em;
   line-height: 1.4285714;
   margin-top: 0.8571429em;
@@ -1151,6 +1155,14 @@ body {
 
 .prose :where(.prose > :last-child):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
   margin-bottom: 0;
+}
+
+.prose :where(h5):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
+  color: hsl(var(--foreground));
+}
+
+.prose :where(h6):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
+  color: hsl(var(--foreground));
 }
 
 .prose-sm {
@@ -1647,6 +1659,98 @@ body {
   margin-bottom: 0;
 }
 
+/* Fix for prose text colors in dark mode */
+
+.dark .prose {
+  color: hsl(var(--foreground));
+}
+
+.dark .prose p {
+  color: hsl(var(--foreground));
+}
+
+.dark .prose li {
+  color: hsl(var(--foreground));
+}
+
+.dark .prose strong {
+  color: hsl(var(--foreground));
+}
+
+.dark .prose a {
+  color: hsl(var(--primary));
+}
+
+.dark .prose h1,
+  .dark .prose h2,
+  .dark .prose h3,
+  .dark .prose h4,
+  .dark .prose h5,
+  .dark .prose h6 {
+  color: hsl(var(--foreground));
+}
+
+.dark .prose blockquote {
+  color: hsl(var(--foreground));
+}
+
+.dark .prose blockquote p {
+  color: hsl(var(--foreground));
+}
+
+.dark .prose figure figcaption {
+  color: hsl(var(--muted-foreground));
+}
+
+.dark .prose code {
+  color: hsl(var(--foreground));
+  background-color: hsl(var(--muted));
+}
+
+.dark .prose pre {
+  background-color: hsl(var(--muted));
+}
+
+.dark .prose pre code {
+  color: hsl(var(--foreground));
+  background-color: transparent;
+}
+
+.dark .prose thead {
+  color: hsl(var(--foreground));
+  border-bottom-color: hsl(var(--border));
+}
+
+.dark .prose thead th {
+  color: hsl(var(--foreground));
+}
+
+.dark .prose tbody tr {
+  border-bottom-color: hsl(var(--border));
+}
+
+.dark .prose tbody td {
+  color: hsl(var(--foreground));
+}
+
+/* Fix for entry-content text */
+
+.dark .entry-content {
+  color: hsl(var(--foreground));
+}
+
+/* Additional styling for text-muted-foreground elements in dark mode */
+
+.dark .text-muted-foreground {
+  color: hsl(var(--muted-foreground));
+}
+
+/* Force all text to use foreground color in dark mode */
+
+.dark p, .dark span, .dark div, .dark li {
+  color: hsl(var(--foreground));
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -2006,6 +2110,14 @@ body {
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.dark .placeholder\:text-muted-foreground::-moz-placeholder {
+  color: hsl(var(--muted-foreground));
+}
+
+.dark .placeholder\:text-muted-foreground::placeholder {
+  color: hsl(var(--muted-foreground));
 }
 
 .file\:border-0::file-selector-button {
