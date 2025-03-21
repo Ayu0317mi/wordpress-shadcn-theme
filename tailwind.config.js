@@ -1,7 +1,16 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
-  content: ["./*.php", "./**/*.php", "*.{js,ts,jsx,tsx,mdx}"],
+  content: [
+    "./*.php", 
+    "./**/*.php", 
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+    "*.{js,ts,jsx,tsx,mdx}"
+  ],
+  prefix: "",
   theme: {
     container: {
       center: true,
@@ -49,43 +58,38 @@ module.exports = {
       typography: {
         DEFAULT: {
           css: {
-            maxWidth: 'none',
-            color: 'hsl(var(--foreground))',
+            maxWidth: "100%",
+            color: "var(--foreground)",
             a: {
-              color: 'hsl(var(--primary))',
-              '&:hover': {
-                color: 'hsl(var(--primary))',
+              color: "var(--primary)",
+              "&:hover": {
+                color: "var(--primary)",
               },
             },
             h1: {
-              color: 'hsl(var(--foreground))',
+              color: "var(--foreground)",
             },
             h2: {
-              color: 'hsl(var(--foreground))',
+              color: "var(--foreground)",
             },
             h3: {
-              color: 'hsl(var(--foreground))',
+              color: "var(--foreground)",
             },
             h4: {
-              color: 'hsl(var(--foreground))',
-            },
-            h5: {
-              color: 'hsl(var(--foreground))',
-            },
-            h6: {
-              color: 'hsl(var(--foreground))',
-            },
-            strong: {
-              color: 'hsl(var(--foreground))',
-            },
-            code: {
-              color: 'hsl(var(--foreground))',
-            },
-            figcaption: {
-              color: 'hsl(var(--muted-foreground))',
+              color: "var(--foreground)",
             },
             blockquote: {
-              color: 'hsl(var(--foreground))',
+              borderLeftColor: "var(--muted)",
+              backgroundColor: "var(--muted)",
+              color: "var(--muted-foreground)",
+              borderRadius: "var(--radius)",
+              padding: "1rem",
+            },
+            code: {
+              backgroundColor: "var(--muted)",
+              color: "var(--muted-foreground)",
+              borderRadius: "var(--radius-sm)",
+              padding: "0.2em 0.4em",
             },
           },
         },
@@ -111,6 +115,6 @@ module.exports = {
       },
     },
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 }
 
