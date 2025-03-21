@@ -63,7 +63,6 @@
             ?>
             <ul class="space-y-2 text-sm">
               <li><a href="<?php echo esc_url(home_url('/about')); ?>" class="text-muted-foreground hover:text-foreground">About Us</a></li>
-              <li><a href="<?php echo esc_url(home_url('/contact')); ?>" class="text-muted-foreground hover:text-foreground">Contact</a></li>
               <li><a href="<?php echo esc_url(home_url('/privacy')); ?>" class="text-muted-foreground hover:text-foreground">Privacy Policy</a></li>
               <li><a href="<?php echo esc_url(home_url('/terms')); ?>" class="text-muted-foreground hover:text-foreground">Terms of Service</a></li>
             </ul>

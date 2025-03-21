@@ -106,8 +106,7 @@
           ?>
           <a href="<?php echo esc_url(home_url('/')); ?>" class="text-sm font-medium transition-colors hover:text-primary">Home</a>
           <a href="<?php echo esc_url(home_url('/about')); ?>" class="text-sm font-medium transition-colors hover:text-primary">About</a>
-          <a href="<?php echo esc_url(home_url('/blog')); ?>" class="text-sm font-medium transition-colors hover:text-primary">Blog</a>
-          <a href="<?php echo esc_url(home_url('/contact')); ?>" class="text-sm font-medium transition-colors hover:text-primary">Contact</a>
+          <a href="<?php echo esc_url(home_url('/')); ?>" class="text-sm font-medium transition-colors hover:text-primary">Blog</a>
           <?php
         }
         ?>
