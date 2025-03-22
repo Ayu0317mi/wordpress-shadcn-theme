@@ -201,7 +201,7 @@
         </div>
         
         <!-- Sidebar Footer -->
-        <div data-sidebar="footer" class="mt-auto flex flex-col gap-2 p-4 border-t">
+        <div data-sidebar="footer" class="mt-auto flex flex-col gap-3 p-4 border-t">
           <button id="theme-toggle" class="flex items-center gap-2 w-full rounded-md p-2 text-sm hover:bg-accent hover:text-accent-foreground transition-colors" aria-label="Toggle dark mode">
             <!-- Sun icon (shown in dark mode) -->
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dark:block hidden h-4 w-4">
@@ -221,6 +221,47 @@
             </svg>
             <span>Switch Mode</span>
           </button>
+          
+          <div class="h-px w-full bg-border my-1"></div>
+          
+          <?php if (is_user_logged_in()): 
+            $current_user = wp_get_current_user();
+            $display_name = $current_user->display_name;
+            $user_email = $current_user->user_email;
+            ?>
+            <!-- User is logged in, show profile -->
+            <div class="flex items-center gap-2 p-2 rounded-md">
+              <div class="relative h-9 w-9 shrink-0 overflow-hidden rounded-full border">
+                <?php echo get_avatar($current_user->ID, 36, '', $display_name, ['class' => 'h-full w-full object-cover']); ?>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-sm font-medium"><?php echo esc_html($display_name); ?></span>
+                <span class="text-xs text-muted-foreground truncate max-w-[120px]"><?php echo esc_html($user_email); ?></span>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <a href="<?php echo esc_url(admin_url()); ?>" class="flex-1 flex items-center justify-center gap-2 rounded-md border bg-background p-2 text-xs font-medium shadow-sm hover:bg-accent hover:text-accent-foreground transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                Dashboard
+              </a>
+              <a href="<?php echo esc_url(wp_logout_url(home_url())); ?>" class="flex-1 flex items-center justify-center gap-2 rounded-md border bg-background p-2 text-xs font-medium shadow-sm hover:bg-accent hover:text-accent-foreground transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                Log out
+              </a>
+            </div>
+          <?php else: ?>
+            <!-- User is not logged in, show sign-in button -->
+            <a href="<?php echo esc_url(wp_login_url(get_permalink())); ?>" class="flex items-center justify-center gap-2 rounded-md bg-primary text-primary-foreground p-2 text-sm font-medium hover:bg-primary/90 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+              Sign in
+            </a>
+            <?php if (get_option('users_can_register')): ?>
+            <a href="<?php echo esc_url(wp_registration_url()); ?>" class="flex items-center justify-center gap-2 rounded-md border bg-background p-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              Create account
+            </a>
+            <?php endif; ?>
+          <?php endif; ?>
         </div>
       </div>
     </div>
@@ -403,8 +444,49 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dark:hidden h-4 w-4">
               <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
             </svg>
-            <span>Toggle Theme</span>
+            <span>Switch Mode</span>
           </button>
+          
+          <div class="h-px w-full bg-border my-2"></div>
+          
+          <?php if (is_user_logged_in()): 
+            $current_user = wp_get_current_user();
+            $display_name = $current_user->display_name;
+            $user_email = $current_user->user_email;
+            ?>
+            <!-- User is logged in, show profile -->
+            <div class="flex items-center gap-2 p-2 rounded-md">
+              <div class="relative h-9 w-9 shrink-0 overflow-hidden rounded-full border">
+                <?php echo get_avatar($current_user->ID, 36, '', $display_name, ['class' => 'h-full w-full object-cover']); ?>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-sm font-medium"><?php echo esc_html($display_name); ?></span>
+                <span class="text-xs text-muted-foreground truncate max-w-[160px]"><?php echo esc_html($user_email); ?></span>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <a href="<?php echo esc_url(admin_url()); ?>" class="flex-1 flex items-center justify-center gap-2 rounded-md border bg-background p-2 text-xs font-medium shadow-sm hover:bg-accent hover:text-accent-foreground transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                Dashboard
+              </a>
+              <a href="<?php echo esc_url(wp_logout_url(home_url())); ?>" class="flex-1 flex items-center justify-center gap-2 rounded-md border bg-background p-2 text-xs font-medium shadow-sm hover:bg-accent hover:text-accent-foreground transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                Log out
+              </a>
+            </div>
+          <?php else: ?>
+            <!-- User is not logged in, show sign-in button -->
+            <a href="<?php echo esc_url(wp_login_url(get_permalink())); ?>" class="flex items-center justify-center gap-2 rounded-md bg-primary text-primary-foreground p-2 text-sm font-medium hover:bg-primary/90 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+              Sign in
+            </a>
+            <?php if (get_option('users_can_register')): ?>
+            <a href="<?php echo esc_url(wp_registration_url()); ?>" class="flex items-center justify-center gap-2 rounded-md border bg-background p-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground transition-colors mt-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              Create account
+            </a>
+            <?php endif; ?>
+          <?php endif; ?>
         </div>
       </div>
     </div>
