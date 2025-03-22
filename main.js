@@ -28,8 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
       sidebar.dataset.state = expanded ? "expanded" : "collapsed";
       sidebar.dataset.collapsible = expanded ? "" : "offcanvas";
       
-      // Transform the sidebar instead of adjusting content margin
-      // Clear floating-point rounding issues by using exact integers
+      // Transform the sidebar
       sidebarContent.style.transform = expanded ? "translateX(0px)" : "translateX(-100%)";
       
       // Set cookie
@@ -55,48 +54,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
       
-      // Adjust the entire page content, header, and footer
-      const header = document.getElementById("masthead");
+      // Adjust the page content layout
       const pageContent = document.getElementById("content");
-      const footer = document.getElementById("colophon");
       const pageWrapper = document.getElementById("page");
-      const transitionStyle = "transform 0.2s ease-in-out, width 0.2s ease-in-out, margin-left 0.2s ease-in-out";
       
       if (pageWrapper) {
-        // Set margin approach instead of transform to avoid gaps
-        pageWrapper.style.transition = transitionStyle;
+        pageWrapper.style.transition = "margin-left 0.2s ease-in-out";
         pageWrapper.style.boxSizing = "border-box";
         
-        // Only move the page on desktop, hover on mobile
+        // Only shift content on desktop
         if (!isMobile) {
-          // Ensuring exact width matches to avoid gaps
-          const sidebarWidth = "16rem";
+          const sidebarWidth = "280px";
           pageWrapper.style.marginLeft = expanded ? sidebarWidth : "0";
-          pageWrapper.style.width = expanded ? `calc(100% - ${sidebarWidth})` : "100%";
         } else {
-          // Reset positioning on mobile - sidebar will float over content
           pageWrapper.style.marginLeft = "0";
-          pageWrapper.style.width = "100%";
         }
-      }
-      
-      // Reset any transforms on individual elements to avoid duplication
-      if (header) {
-        header.style.transition = transitionStyle;
-        header.style.transform = "translateX(0)";  // Reset transform
-        header.style.width = "100%";  // Full width of its container
-      }
-      
-      if (pageContent) {
-        pageContent.style.transition = transitionStyle;
-        pageContent.style.transform = "translateX(0)";  // Reset transform
-        pageContent.style.width = "100%";  // Full width of its container
-      }
-      
-      if (footer) {
-        footer.style.transition = transitionStyle;
-        footer.style.transform = "translateX(0)";  // Reset transform
-        footer.style.width = "100%";  // Full width of its container
       }
     }
   }
@@ -142,11 +114,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize sidebar state
   const initialSidebarState = getSidebarState();
   
-  // Small delay to ensure all DOM elements are properly loaded before applying transitions
+  // Small delay to ensure all DOM elements are properly loaded
   setTimeout(() => {
-    // Set initial state for the trigger button
+    // Initialize the trigger button state
     if (sidebarTrigger) {
-      // Initialize the trigger button state
       if (initialSidebarState && window.innerWidth >= 768) {
         sidebarTrigger.style.opacity = "0";
         sidebarTrigger.style.pointerEvents = "none";
@@ -156,43 +127,16 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
     
+    // Apply initial sidebar state
     setSidebarState(initialSidebarState);
     
-    // Make transitions visible only after initial state is set
+    // Enable transitions after initial state is set
     if (sidebarContent) {
       sidebarContent.style.transition = "transform 0.2s ease-in-out";
     }
-    
-    // Also set transitions for page elements after initial state is set
-    const header = document.getElementById("masthead");
-    const pageContent = document.getElementById("content");
-    const footer = document.getElementById("colophon");
-    const pageWrapper = document.getElementById("page");
-    const transitionStyle = "transform 0.2s ease-in-out, width 0.2s ease-in-out, margin-left 0.2s ease-in-out";
-    
-    if (sidebarTrigger) {
-      sidebarTrigger.style.transition = "left 0.2s ease-in-out, transform 0.2s ease-in-out, opacity 0.2s ease-in-out";
-    }
-    
-    if (pageWrapper) {
-      pageWrapper.style.transition = transitionStyle;
-      pageWrapper.style.boxSizing = "border-box";
-    }
-    
-    if (header) {
-      header.style.transition = transitionStyle;
-    }
-    
-    if (pageContent) {
-      pageContent.style.transition = transitionStyle;
-    }
-    
-    if (footer) {
-      footer.style.transition = transitionStyle;
-    }
   }, 50);
   
-  // Add event listeners for sidebar
+  // Add event listeners for sidebar controls
   if (sidebarTrigger) {
     sidebarTrigger.addEventListener("click", function() {
       const isMobile = window.innerWidth < 768;
@@ -228,15 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
   
-  // Function to clean up layout after transitions
-  function cleanupLayout() {
-    const pageWrapper = document.getElementById("page");
-    if (pageWrapper) {
-      pageWrapper.style.boxSizing = "border-box";
-    }
-  }
-  
-  // Listen for window resize to switch between mobile and desktop
+  // Listen for window resize
   window.addEventListener("resize", function() {
     const isMobile = window.innerWidth < 768;
     const isExpanded = sidebar?.dataset.state === "expanded";
@@ -247,22 +183,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // Re-apply sidebar state to adjust layout for new screen size
-    if (isExpanded) {
-      setSidebarState(isExpanded);
-    }
-    
-    // Clean up after resize
-    cleanupLayout();
+    setSidebarState(isExpanded);
   });
   
-  // Listen for transition end to fix any remaining gap issues
-  document.addEventListener("transitionend", function(event) {
-    if (event.target.id === "page" || event.target.closest("#sidebar-wrapper")) {
-      cleanupLayout();
-    }
-  });
-  
-  // Add keyboard shortcut to toggle sidebar (Ctrl/Cmd + B)
+  // Add keyboard shortcut for toggling sidebar (Ctrl/Cmd + B)
   document.addEventListener("keydown", function(event) {
     if ((event.ctrlKey || event.metaKey) && event.key === "b") {
       event.preventDefault();

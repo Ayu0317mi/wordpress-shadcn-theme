@@ -75,16 +75,6 @@ add_action('after_setup_theme', 'shadcn_wp_setup');
 // Register widget area
 function shadcn_wp_widgets_init() {
   register_sidebar(array(
-    'name'          => esc_html__('Sidebar', 'shadcn-wp'),
-    'id'            => 'sidebar-1',
-    'description'   => esc_html__('Add widgets here.', 'shadcn-wp'),
-    'before_widget' => '<section id="%1$s" class="widget %2$s rounded-lg border bg-card p-6 text-card-foreground shadow-sm mb-6">',
-    'after_widget'  => '</section>',
-    'before_title'  => '<h2 class="widget-title text-lg font-semibold mb-4">',
-    'after_title'   => '</h2>',
-  ));
-  
-  register_sidebar(array(
     'name'          => esc_html__('Footer Widgets', 'shadcn-wp'),
     'id'            => 'footer-widgets',
     'description'   => esc_html__('Add footer widgets here.', 'shadcn-wp'),
